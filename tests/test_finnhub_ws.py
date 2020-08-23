@@ -40,7 +40,7 @@ class TestFinn(unittest.TestCase):
         :return:
         """
         def checker(loop_, api_):
-            def helper(payload):
+            async def helper(payload):
                 print(payload)
                 assert payload['type'] in {'trade', 'ping'}
 
@@ -48,7 +48,7 @@ class TestFinn(unittest.TestCase):
                 api_.trades_stream(helper, 'BINANCE:BTCUSDT'))
 
             try:
-                loop_.call_later(5, task.cancel)
+                loop_.call_later(10, task.cancel)
                 loop_.run_until_complete(task)
             except asyncio.CancelledError:
                 pass

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import json
-from typing import Callable, NoReturn
+from typing import Callable, NoReturn, Awaitable
 
 import websockets
 from tenacity import retry, wait_fixed, retry_if_exception_type
@@ -20,11 +20,13 @@ class FinnHubWs(object):
 
     @retry(retry=retry_if_exception_type(ConnectionAbortedError),
            wait=wait_fixed(30))
-    async def trades_stream(self, callback: Callable[[dict], NoReturn],
+    async def trades_stream(self, callback: Callable[[dict],
+                                                     Awaitable[NoReturn]],
                             *symbols: str) -> NoReturn:
         """Stream real-time trades for US stocks, forex and crypto.
 
-        :param callback: callback function to consume each payload from stream
+        :param callback: async callback function to consume each payload from
+            stream
         :param symbols: symbols to subscribe
         :return:
         """
@@ -37,4 +39,4 @@ class FinnHubWs(object):
                 msg = await ws.recv()
                 if msg is None:
                     raise ConnectionAbortedError('aborted')
-                callback(json.loads(msg))
+                await callback(json.loads(msg))
