@@ -22,8 +22,12 @@ class TradesProducer(object):
 
     async def send_trades(self, *symbols: str):
         async def cb(dc: dict):
-            b = json.dumps(dc).encode('utf8')
-            await self._finn_producer.send(self._topic, b)
+            # only ingest valid data
+            if dc['type'] == 'trade':
+                data = dc['data'][0]
+                payload = f"{data['p']}, {data['s']}, {data['t']}, {data['v']}"
+                b = json.dumps(payload).encode('utf8')
+                await self._finn_producer.send(self._topic, b)
 
         await self._finn_ws.trades_stream(cb, *symbols)
 
