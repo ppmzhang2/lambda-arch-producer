@@ -1,16 +1,15 @@
 from __future__ import annotations
 
-from typing import Callable, NoReturn, Awaitable
+from typing import Awaitable, Callable, NoReturn
 
-from aiokafka import AIOKafkaConsumer
-from aiokafka import AIOKafkaProducer, ConsumerRecord
+from aiokafka import AIOKafkaConsumer, AIOKafkaProducer, ConsumerRecord
 
 from config import Config
 
 __all__ = ['FinnHubProducer', 'FinnHubConsumer']
 
 
-class FinnHubProducer(object):
+class FinnHubProducer:
     __slots__ = ['_brokers']
 
     def __init__(self):
@@ -25,7 +24,7 @@ class FinnHubProducer(object):
             await _producer.stop()
 
 
-class FinnHubConsumer(object):
+class FinnHubConsumer:
     __slots__ = ['_brokers', '_offset', '_topic']
 
     def __init__(self, offset: str, topic: str):

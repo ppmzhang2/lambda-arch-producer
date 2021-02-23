@@ -5,9 +5,7 @@ from app.trades_producer import TradesProducer
 
 args = sys.argv[1:]
 
-funcs = {
-    'produce': (1, TradesProducer, TradesProducer.run)
-}
+funcs = {'produce': (1, TradesProducer, TradesProducer.run)}
 
 
 def request() -> Optional[str]:

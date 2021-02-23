@@ -12,7 +12,7 @@ __all__ = ['TradesProducer']
 from config import Config
 
 
-class TradesProducer(object):
+class TradesProducer:
     __slots__ = ['_topic', '_finn_ws', '_finn_producer']
 
     def __init__(self):
