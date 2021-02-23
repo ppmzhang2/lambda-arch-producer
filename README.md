@@ -4,7 +4,7 @@ Produce real-time trades for US stocks, forex and crypto to Kafka from [Finnhub]
 
 ## Usage
 
-1. Push finnhub trade stream to the Kafaka by adding symbols of Us stocks, forex and crypto, separated by comma:
+1. Push finnhub trade stream to the Kafaka by adding symbols of Us stocks, forex and crypto, separated by space:
 
     ```sh
     python -m app kafka BINANCE:BTCUSDT AMZN

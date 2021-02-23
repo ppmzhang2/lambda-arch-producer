@@ -1,13 +1,16 @@
 from fire import Fire
 
-from app.trades_producer import TradesProducer
+from app.streamer import Streamer
 
 
 class Producer:
-    _PRODUCER = TradesProducer()
+    _STREAMER = Streamer()
 
     def kafka(self, *symbols: str):
-        return self._PRODUCER.run(*symbols)
+        return self._STREAMER.stream_to_kafka(*symbols)
+
+    def console(self, *symbols: str):
+        return self._STREAMER.stream_to_console(*symbols)
 
 
 if __name__ == '__main__':
